@@ -11,18 +11,19 @@ class TranslationTest extends TestCase
     /**
      * @dataProvider allTranslationsProvider
      */
-    public function testAllByLanguage($locale, $subset)
+    public function testAllByLanguage($locale, $exampleTranslation)
     {
-        $this->assertArraySubset($subset, Translation::getAllByLanguage($locale));
+        $translations = Translation::getAllByLanguage($locale);
+        $this->assertSame($translations['paymentPart'], $exampleTranslation);
     }
 
     public function allTranslationsProvider()
     {
         return [
-            ['de', ['paymentPart' => 'Zahlteil']],
-            ['fr', ['paymentPart' => 'Section paiement']],
-            ['it', ['paymentPart' => 'Sezione pagamento']],
-            ['en', ['paymentPart' => 'Payment part']]
+            ['de', 'Zahlteil'],
+            ['fr', 'Section paiement'],
+            ['it', 'Sezione pagamento'],
+            ['en', 'Payment part']
         ];
     }
 
