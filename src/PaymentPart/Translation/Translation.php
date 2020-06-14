@@ -9,30 +9,32 @@ class Translation
             'paymentPart' => 'Zahlteil',
             'creditor' => 'Konto / Zahlbar an',
             'reference' => 'Referenz',
-            'additionalInformation' => 'Zusätzliche Informationen',
-            'currency' => 'Währung',
+            'additionalInformation' => 'Zusätzliche Informationen',
+            'currency' => 'Währung',
             'amount' => 'Betrag',
             'receipt' => 'Empfangsschein',
             'acceptancePoint' => 'Annahmestelle',
             'separate' => 'Vor der Einzahlung abzutrennen',
             'payableBy' => 'Zahlbar durch',
             'payableByName' => 'Zahlbar durch (Name/Adresse)',
-            'inFavorOf' => 'Zugunsten'
+            'inFavorOf' => 'Zugunsten',
+            'doNotUseForPayment' => 'NICHT ZUR ZAHLUNG VERWENDEN',
         ],
 
         'fr' => [
             'paymentPart' => 'Section paiement',
-            'creditor' => 'Compte / Payable à',
-            'reference' => 'Référence',
-            'additionalInformation' => 'Informations supplémentaires',
+            'creditor' => 'Compte / Payable à',
+            'reference' => 'Référence',
+            'additionalInformation' => 'Informations supplémentaires',
             'currency' => 'Monnaie',
             'amount' => 'Montant',
-            'receipt' => 'Récépissé',
-            'acceptancePoint' => 'Point de dépôt',
-            'separate' => 'A détacher avant le versement',
+            'receipt' => 'Récépissé',
+            'acceptancePoint' => 'Point de dépôt',
+            'separate' => 'A détacher avant le versement',
             'payableBy' => 'Payable par',
             'payableByName' => 'Payable par (nom/adresse)',
-            'inFavorOf' => 'En faveur de'
+            'inFavorOf' => 'En faveur de',
+            'doNotUseForPayment' => 'NE PAS UTILISER POUR LE PAIEMENT',
         ],
 
         'it' => [
@@ -47,7 +49,8 @@ class Translation
             'separate' => 'Da staccare prima del versamento',
             'payableBy' => 'Pagabile da',
             'payableByName' => 'Pagabile da (nome/indirizzo)',
-            'inFavorOf' => 'A favore di'
+            'inFavorOf' => 'A favore di',
+            'doNotUseForPayment' => 'NON UTILIZZARE PER IL PAGAMENTO',
         ],
 
         'en' => [
@@ -62,25 +65,27 @@ class Translation
             'separate' => 'Separate before paying in',
             'payableBy' => 'Payable by',
             'payableByName' => 'Payable by (name/address)',
-            'inFavorOf' => 'In favour of'
+            'inFavorOf' => 'In favour of',
+            'doNotUseForPayment' => 'DO NOT USE FOR PAYMENT'
         ]
     ];
 
     public static function getAllByLanguage($language): ?array
     {
-        if (array_key_exists($language, self::TRANSLATIONS)) {
-
-            return self::TRANSLATIONS[$language];
+        if (! array_key_exists($language, self::TRANSLATIONS)) {
+            return null;
         }
+
+        return self::TRANSLATIONS[$language];
     }
 
     public static function get(string $key, string $language): ?string
     {
-        if ($translations = self::getAllByLanguage($language)) {
-            if (array_key_exists($key, $translations)) {
-
-                return $translations[$key];
-            }
+        $translations = self::getAllByLanguage($language);
+        if (! is_array($translations) || ! array_key_exists($key, $translations)) {
+            return null;
         }
+
+        return $translations[$key];
     }
 }
