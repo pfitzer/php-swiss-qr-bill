@@ -57,10 +57,11 @@ class QrPaymentReferenceGeneratorTest extends TestCase
 
     /**
      * @dataProvider invalidQrPaymentReferenceProvider
-     * @expectedException Sprain\SwissQrBill\Validator\Exception\InvalidQrPaymentReferenceException
      */
     public function testInvalidQrPaymentReference($customerIdentification, $referenceNumber)
     {
+        $this->expectException(InvalidQrPaymentReferenceException::class);
+
         QrPaymentReferenceGenerator::generate(
             $customerIdentification,
             $referenceNumber
