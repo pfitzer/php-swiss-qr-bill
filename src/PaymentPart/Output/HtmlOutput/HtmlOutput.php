@@ -14,13 +14,15 @@ use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\PaymentPartTemplat
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\Template\TitleElementTemplate;
 use Sprain\SwissQrBill\PaymentPart\Output\OutputInterface;
 use Sprain\SwissQrBill\PaymentPart\Translation\Translation;
+use Sprain\SwissQrBill\QrBill;
 
 final class HtmlOutput extends AbstractOutput implements OutputInterface
 {
+    private $paymentPart = PaymentPartTemplate::TEMPLATE;
+
     public function getPaymentPart(): string
     {
-        $paymentPart = PaymentPartTemplate::TEMPLATE;
-
+        $paymentPart = $this->paymentPart;
         $paymentPart = $this->addSwissQrCodeImage($paymentPart);
         $paymentPart = $this->addInformationContent($paymentPart);
         $paymentPart = $this->addInformationContentReceipt($paymentPart);
@@ -33,6 +35,11 @@ final class HtmlOutput extends AbstractOutput implements OutputInterface
         $paymentPart = $this->translateContents($paymentPart, $this->getLanguage());
 
         return $paymentPart;
+    }
+
+    public function setPaymentPart(string $paymentPart): void
+    {
+        $this->paymentPart = $paymentPart;
     }
 
     private function addSwissQrCodeImage(string $paymentPart): string
